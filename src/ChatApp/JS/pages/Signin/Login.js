@@ -57,18 +57,18 @@ export default function Login({callback}) {
   const verifyOtp = async () => {
     try {
       setLoading(true)
-      if (otp === '') {
-        toast('enter a otp')
-        return;
-      }
-       await toast.promise(
-        result.confirm(otp),
-        {
-          pending: 'Verifying Otp',
-          success: 'Otp verified 👌',
-          error: 'Otp is wrong 🤯'
-        }
-        )
+      // if (otp === '') {
+      //   toast('enter a otp')
+      //   return;
+      // }
+      //  await toast.promise(
+      //   result.confirm(otp),
+      //   {
+      //     pending: 'Verifying Otp',
+      //     success: 'Otp verified 👌',
+      //     error: 'Otp is wrong 🤯'
+      //   }
+      //   )
         callback({ token: 1, Phone_number }, undefined)
     } catch (err) {
       callback(undefined, 'OTP verification failed!');

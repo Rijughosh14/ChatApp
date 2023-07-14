@@ -21,7 +21,8 @@ export default function Home() {
     socket.on("received_refresh_chat", () => {
       getdata()
     })
-
+    const result=getUserSession().user
+     socket.emit('user_connection',result)
     return ()=>socket.off('received_refresh_chat')
   }, [])
 

@@ -30,21 +30,18 @@ function App2() {
   const [Chatstate, dispatchChat] = useReducer(authChatReducer, initialChatState)
   const [Callstate, dispatchCall] = useReducer(CallReducer, initialCallstate)
   const [group, SetGroup] = useState([])
+  const [data, SetData] = useState([])
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const data = getUserSession()
-    data && socket.connect()
-    return () => {
-      socket.disconnect();
-    };
-  }, [])
+  useEffect(()=>{
+    const result = getUserSession()
+    SetData(result)
+  },[])
 
   useEffect(() => {
-    const data = getUserSession()
     data.status && userProfile(data.user).then((data) => dispatch({ type: 'SET_USER', payload: { user: data.name, number: data.phone_number, profile_pic: data.profile_pic, loggedIn: true } }))
     data.status && getdata()
-  }, [Chatstate, Callstate])
+  }, [ Callstate,data])
 
   useEffect(() => {
     if (group.length !== 0) {

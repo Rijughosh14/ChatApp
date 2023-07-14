@@ -8,12 +8,13 @@ import React, { useContext, useState } from 'react'
 import { Link,useNavigate } from "react-router-dom";
 import { UserContext } from "../../hooks/context.js";
 import {logout} from '../../services/userService.js'
+import { socket } from "../../Socket/Socket.js";
 
 function Logout() {
 
     const [open, setOpen] = useState(true);
     const navigate=useNavigate()
-    const{dispatchChat}=useContext(UserContext)
+    const{state,dispatchChat}=useContext(UserContext)
  
   const handleOpen = async(e) => {
     e.preventDefault()
@@ -21,6 +22,7 @@ function Logout() {
     await logout()
     dispatchChat({type:'LOGOUT'});
     navigate('/')
+    socket.emit('logout',state.user)
   };
   return (
     <>
