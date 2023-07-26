@@ -11,7 +11,8 @@ ChatApp is lightweight chat application designed for individual to chat with oth
 2.Socket.js
 3.Simple Peer.js
 4.Axios
-....
+
+and many more
 
 # Getting Started with Create React App
 
