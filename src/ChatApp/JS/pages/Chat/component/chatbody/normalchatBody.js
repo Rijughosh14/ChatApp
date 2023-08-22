@@ -21,7 +21,7 @@ function NormalChatBody({ message }) {
 
   return (
     <>
-      <div className='flex flex-col w-full h-full overflow-auto  '  >
+      <div className='flex flex-col w-full h-full overflow-auto antialiased bg-gradient-to-b from-blue-100 to-white '>
         <div>
         {
           message.map((data) => {

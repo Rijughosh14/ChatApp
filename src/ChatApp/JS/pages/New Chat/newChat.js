@@ -34,8 +34,8 @@ export default function Newchat() {
 
   return (
     <>
-    <div>
-    <Card className="w-96">
+    <div className="bg-blue-50">
+    <Card className="w-96 h-screen bg-blue-50">
       <CardHeader
         variant="gradient"
         className=" grid h-8 place-items-center bg-[#1da1f2]"
@@ -50,7 +50,10 @@ export default function Newchat() {
         {
               data.map((data)=>{
                 return (
+                  <>
                   <Chatcomponent key ={data.id}id={data.id} name={data.name} set={1} profile={data.profile_pic}/>
+                  <hr/>
+                  </>
                   )
               })
             }

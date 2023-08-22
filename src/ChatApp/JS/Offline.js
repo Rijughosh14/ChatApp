@@ -3,7 +3,7 @@ import React from 'react'
 const Offline = () => {
   return (
     <>
-<div className="bg-green-200 text-white">
+<div className="bg-blue-200 text-white">
 	<div className="flex h-screen">
 		<div className="m-auto text-center">
 			<div>

@@ -31,7 +31,7 @@ function GroupMessagebox({ msg, id, name,img }) {
     link===''?
     getUserSession().user === id ?
       <>
-        <div className={`mt-${p} flex flex-row-reverse max-w-screen-lg  bg-gray-200`}>
+        <div className={`mt-${p} flex flex-row-reverse max-w-screen-lg`}>
           <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit text-black" >
             {img && <img src={process.env.REACT_APP_IMAGE_URL + img} alt="" className="hover:cursor-pointer" onClick={(e)=>assignimg(e)}/>
             }
@@ -43,7 +43,7 @@ function GroupMessagebox({ msg, id, name,img }) {
       </> :
       <>
         <div className={`mt-${p}  flex flex-row max-w-screen-lg `}>
-          <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit bg-green-100 flex flex-col text-black" >
+          <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit bg-gray-200 flex flex-col text-black" >
             <div className="font-serif font-bold" style={{ color: `rgb(${r},${g},${b})` }}>
               {name}
             </div>

@@ -21,8 +21,8 @@ function Logout() {
     setOpen(!open)
     await logout()
     dispatchChat({type:'LOGOUT'});
-    navigate('/')
     socket.emit('logout',state.user)
+    navigate('/')
   };
   return (
     <>

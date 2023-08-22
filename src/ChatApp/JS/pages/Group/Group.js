@@ -84,7 +84,7 @@ export default function Group() {
         <Card className=" flex w-96 relative gap-1">
           <CardHeader
             variant="gradient"
-            color="green"
+            color="blue"
             className=" grid h-8 place-items-center bg-[#1da1f2]"
             floated={false}
           >
@@ -102,7 +102,7 @@ export default function Group() {
               </div>
             </div>
             <div>
-              <Input variant="standard" label={"Group Name"} color={"green"} value={groupname} onChange={(e) => setgroupname(e.target.value)} />
+              <Input variant="standard" label={"Group Name"} color={"blue"} value={groupname} onChange={(e) => setgroupname(e.target.value)} />
             </div>
             <div className="h-16 w-19/20 border border-solid border-gray-400 border-x-white border-t-white gap-2 flex overflow-x-auto">
               {
@@ -145,7 +145,7 @@ export default function Group() {
             </div>
           </CardBody>
           <CardFooter className="absolute inset-x-0 bottom-0 ">
-            <Button color="green" fullWidth onClick={(e) => handledata(e)}>
+            <Button color="blue" fullWidth onClick={(e) => handledata(e)}>
               Create
             </Button>
           </CardFooter>

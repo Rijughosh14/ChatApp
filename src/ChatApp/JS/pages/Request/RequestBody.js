@@ -11,6 +11,7 @@ const RequestBody = ({id,name,number}) => {
     }
     
   return (
+    <>
     <div  className='flex flex-col gap-2 border-b m-2 border-gray-300'>
         <div className=''>
             <h2>
@@ -31,6 +32,7 @@ const RequestBody = ({id,name,number}) => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

@@ -76,14 +76,14 @@ function NormalChatHeader({ name, link }) {
 
     return (
         <>
-            <div className='flex flex-row bg-green-100 gap-2 rounded-b-lg space-between'>
+            <div className='flex flex-row bg-blue-100 gap-2 rounded-b-lg space-between relative'>
                 <div className='p-2'>
                     <button onClick={() => setState()}>
                         <Avatar link={link} />
                     </button>
                 </div>
 
-                <div className='p-2'>
+                <div className='p-2 absolute right-1/2 top-1 font-bold italic text-2xl text-blue-gray-800'>
                     <h4>
                         {name}
                     </h4>

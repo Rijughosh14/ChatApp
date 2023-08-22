@@ -9,7 +9,7 @@ function SearchBar({callback}) {
   return (
     <>
       <div className='w-72 bg-gray-200 h-auto border rounded mx-auto my-3' >
-        <Input size="md" color='teal' placeholder='Search or Start a new chat' onChange={(e)=>handleChange(e)}/>
+        <Input size="md" color='blue' placeholder='Search or Start a new chat' onChange={(e)=>handleChange(e)}/>
       </div>
     </>
   )

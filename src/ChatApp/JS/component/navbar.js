@@ -23,9 +23,9 @@ function Navbar() {
 
   return (
   <>
-  <div>
+  <div className="bg-blue-50">
     <Tabs value="html" className="w-full">
-    <TabsHeader className="h-14">
+    <TabsHeader className="h-14 bg-blue-50">
       <div className="w-16 flex m-auto" key={2}>
       <Link to='/profile'>
           <Avatar link={profile}/>

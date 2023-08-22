@@ -21,6 +21,9 @@ const Signup = ({ number }) => {
   }, [number])
 
   const submitData = async (e) => {
+    if(Name===''){
+      return
+    }
     try {
       const response = await image_upload(Profile)
       dispatch({type:'SET_USER',payload:{user:Name,number:Phone_number,profile_pic:response,loggedIn:true}})
@@ -39,9 +42,12 @@ const Signup = ({ number }) => {
   }
 
   return (
-    <div className='flex flex-col bg-blue-gray-500 h-screen w-full'>
-      <Card className=' m-auto gap-2 relative h-96 w-96 ' encType="multipart/form-data" >
-        <div className='mx-auto'>Profile pic upload</div>
+    <div className='flex flex-col antialiased bg-gradient-to-br from-blue-100 to-white  h-screen w-full relative'>
+       <div className="absolute top-2 left-4">
+          <h1 className="text-3xl text-gray-800 font-serif">কথা</h1>
+      </div>
+      <Card className=' m-auto gap-2 relative h-96 w-96 shadow-2xl ' encType="multipart/form-data" >
+        <div className='mx-auto font-bold'>Sign Up</div>
         <div className=' border border-solid border-gray-400 m-auto rounded-full w-32 h-32'>
           <label htmlFor="file">
             <input type="file" id='file' name='file' hidden onChange={(e) => handleProfile(e)} accept='image/*' />
@@ -52,7 +58,7 @@ const Signup = ({ number }) => {
           <Input label="Phone Number" size="lg" variant='standard' value={Phone_number} readOnly />
         </div>
         <div className='my-auto mx-3 p-2'>
-          <Input label="Name" size="lg" variant='standard' value={Name} onChange={(e) => setName(e.target.value)} required />
+          <Input label="Name" size="lg" variant='standard' value={Name} onChange={(e) => setName(e.target.value)}/>
         </div>
         <div className='mx-auto my-7'>
           <Button onClick={(e) => submitData(e)}>

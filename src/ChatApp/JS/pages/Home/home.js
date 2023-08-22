@@ -101,7 +101,7 @@ export default function Home() {
   }, [data]);
 
   return (
-    <Card className="h-screen w-96">
+    <Card className="h-screen w-96 antialiased bg-gradient-to-b from-blue-50 to-white shadow-2xl">
       <div>
         <Navbar />
       </div>

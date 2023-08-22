@@ -33,7 +33,7 @@ function Chatcomponent({ id, name, set, profile, number, notification }) {
   }
   return (
     <div onClick={(e) => Chatset(e)} className='border-solid  border-lime-100'>
-      <div className={`flex flex-row gap-2 p-2 hover:bg-blue-gray-100 hover:text-white
+      <div className={`flex flex-row gap-2 p-2 hover:bg-blue-200 hover:text-white
     hover:rounded-lg m-1 hover:cursor-pointer ${noti && "bg-green-200 rounded-lg m-1 hover:"}`}  >
         <div className='mx-2' >
           <Avatar link={profile} />

@@ -88,12 +88,12 @@ function App2() {
           <Route path='/videoincoming' element={<PrivateRoute><Privatecaller><VideoIncoming /></Privatecaller></PrivateRoute>} />
           <Route path='/callincoming' element={<PrivateRoute><Privatecaller><CallIncoming /></Privatecaller></PrivateRoute>} />
           <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/addcontact" exact element={<PrivateRoute><AddContact /></PrivateRoute>} />
+          <Route path="/request" exact element={<PrivateRoute><Request /></PrivateRoute>} />
           <Route path='/' element={<PrivateRoute><Header /></PrivateRoute>}>
             <Route path="/home" exact element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/group" exact element={<PrivateRoute><Group /></PrivateRoute>} />
-            <Route path="/request" exact element={<PrivateRoute><Request /></PrivateRoute>} />
             <Route path="/newchat" exact element={<PrivateRoute><Newchat /></PrivateRoute>} />
-            <Route path="/addcontact" exact element={<PrivateRoute><AddContact /></PrivateRoute>} />
           </Route>
         </Routes>
       </UserContext.Provider>

@@ -22,7 +22,7 @@ function Messagebox({ msg, id, img }) {
   return (
     link === '' ?
       getUserSession().user === id ?
-        <div className="my-3  flex flex-row-reverse max-w-screen-lg  bg-gray-200  ">
+        <div className="my-3  flex flex-row-reverse max-w-screen-lg  ">
           <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit text-black" id="card">
             {img && <img src={process.env.REACT_APP_IMAGE_URL + img} alt="" className="hover:cursor-pointer" onClick={(e) => assignimg(e)} />
             }
@@ -33,7 +33,7 @@ function Messagebox({ msg, id, img }) {
         </div>
         :
         <div className="my-3  flex flex-row max-w-screen-lg ">
-          <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit text-black  bg-blue-400" >
+          <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit text-white  bg-gray-600" >
             {img && <img src={process.env.REACT_APP_IMAGE_URL + img} alt="" className="hover:cursor-pointer" onClick={(e) => assignimg(e)} />
             }
             {msg && <Typography className="break-words">

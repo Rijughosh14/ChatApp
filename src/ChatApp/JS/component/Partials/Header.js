@@ -12,6 +12,7 @@ export const ImageContext = createContext();
 function Header() {
   const {Chatstate}=useContext(UserContext)
 
+
   return (
     <>
     <div className='relative'>
@@ -23,7 +24,7 @@ function Header() {
         <Chat/>
       </div>
       <div>
-        {Chatstate.profileState&&(Chatstate.set==='normal'?<FriendProfile/>:<GroupProfile/>)}
+        {Chatstate&&Chatstate.profileState&&(Chatstate.set==='normal'?<FriendProfile/>:<GroupProfile/>)}
       </div>
     </div>
     </div>

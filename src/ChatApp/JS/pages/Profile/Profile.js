@@ -1,9 +1,17 @@
-import { Avatar, Card, Input ,Button} from '@material-tailwind/react'
-import React, { useContext, useEffect, useState } from 'react'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Button,
+  Input
+} from "@material-tailwind/react";
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from '../../hooks/context'
 import { image_upload, update } from '../../services/userService'
 import camera from '../../Asset/camera.png'
 import { toast } from "react-toastify";
+
 
 
 
@@ -15,20 +23,22 @@ const Profile = () => {
   const[pic,setpic]=useState(false)
   const [Profile, setProfile] = useState('')
   const{state,dispatch}=useContext(UserContext)
+  const ref=useRef()
 
   useEffect(()=>{
       setPhonenumber(state.number)
       setName(state.user)
-      setProfile(state.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
-      setProfile_pic(state.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
+      setProfile(state.profile_pic!==null?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
+      setProfile_pic(state.profile_pic!==null?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
+      ref.current.focus()
   },[state])
+  
 
   const handleprofile=(e)=>{  
     setpic(true)
     setProfile(e.target.files[0])
     setProfile_pic(URL.createObjectURL(e.target.files[0]))
   }
-
 
   const submitData=async(e)=>{
     e.preventDefault();
@@ -39,28 +49,31 @@ const Profile = () => {
   }
 
   return (
-    <div className='flex flex-col bg-gray-600 h-screen w-full'>
-    <Card className=' m-auto gap-2 relative h-96 w-96 ' >
-      <div className='mx-auto'>Profile pic</div>
-      <div className=' border border-solid border-gray-400 m-auto rounded-full w-32 h-32'>       
-      <label htmlFor="avatar">     
+    <>
+    <div className='flex flex-col bg-blue-100 h-screen w-full relative'>
+      <div className="absolute top-2 left-2">
+      <h1 className="text-3xl text-gray-800 font-serif">কথা</h1>
+      </div>
+     <Card className="w-96 m-auto shadow-2xl">
+      <CardHeader floated={true} className="h-80">
+        <label htmlFor="avatar">     
             <input type="file" id='avatar' accept='image/*' hidden onChange={(e)=>handleprofile(e)}/>
-            <Avatar src={Profile_pic} alt='profile' className='mx-2 my-2 cursor-pointer' size='xxl' variant='circular'/>
+            <img src={Profile_pic} alt='profile' className='cursor-pointer object-cover h-full w-full'/>
         </label>
-      </div>  
-      <div className='my-auto mx-3 p-2'>      
-      <Input label="Phone Number" size="lg" variant='standard' defaultValue={Phone_number} readOnly/>
-      </div>
-      <div className='my-auto mx-3 p-2'>      
-      <Input label="Name" size="lg" variant='standard' defaultValue={Name}  onChange={(e)=>setName(e.target.value)} required/>
-      </div>
-      <div className='mx-auto my-7'>
-        <Button onClick={(e)=>submitData(e)}>
+         </CardHeader>
+      <CardBody className="text-center">
+        <Input  size="lg" variant='standard' defaultValue={Name}  onChange={(e)=>setName(e.target.value)} required className="text-black mb-4 text-xl" ref={ref}/>
+        <Input size="lg" variant='standard' defaultValue={Phone_number} readOnly className="text-black text-xl"/>
+      </CardBody>
+      <CardFooter className="flex justify-center gap-7 pt-2">
+      <Button onClick={(e)=>submitData(e)}>
           UPDATE
         </Button>
-      </div>
+      </CardFooter>
     </Card>
     </div>
+    </>
+    
   )
 }
 

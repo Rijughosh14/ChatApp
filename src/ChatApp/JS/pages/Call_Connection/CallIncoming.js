@@ -9,6 +9,7 @@ import { Receiverpeer } from './component/Peer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { IoMdCall } from 'react-icons/io'
 import { toast } from 'react-toastify'
+import callBg from '../../Asset/callBg.svg'
 let mediastream;
 
 const CallIncoming = () => {
@@ -169,12 +170,13 @@ const CallIncoming = () => {
     }, [signal])
 
     return (
-        <div className='flex relative  h-screen w-full bg-brown-400'>
+        <div className='flex relative  h-screen w-full bg-blue-100'>
+            <img src={callBg} alt='vc' className='absolute  h-full w-full'/>
             <video ref={friendRef} className='  h-full w-full object-cover ' autoPlay ></video>
-            <div className=' absolute text-black text-xl top-1/2 left-1/2 font-bold'>
+            <div className='  absolute text-black text-xl top-32 right-1/2 font-bold'>
                 {!status && message + Name}
             </div>
-            {status && <div className='absolute bottom-6 left-1/3 h-16 w-fit flex flex-row place-items-center space-x-14 rounded-lg bg-blue-gray-100 p-4'>
+            {status && <div className='absolute bottom-20 right-1/2 h-16 w-fit flex flex-row place-items-center space-x-14 rounded-lg bg-blue-gray-100 p-4'>
                 <div>
                     <button onClick={micEnable}>
                         {mic ? <BsMic size={'30px'} /> : <BsMicMute size={'30px'} />}
@@ -186,7 +188,7 @@ const CallIncoming = () => {
                     </button>
                 </div>
             </div>}
-            {!status && <div className='absolute bottom-6 left-1/3 h-16 w-fit flex flex-row place-items-center space-x-14 rounded-lg bg-blue-gray-100 p-4'>
+            {!status && <div className='absolute bottom-20 right-1/2 h-16 w-fit flex flex-row place-items-center space-x-14 rounded-lg bg-blue-gray-100 p-4'>
                 <div>
                     <button onClick={call}>
                         <IoMdCall size={'30px'} />

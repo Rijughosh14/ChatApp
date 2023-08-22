@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
         }}
       >
         <MenuHandler>
-           <Link><SlOptionsVertical size={'20px'} opacity={'0.75'}/></Link>
+           <Link><SlOptionsVertical size={'20px'} opacity={'0.90'}/></Link>
         </MenuHandler>
         <MenuList>
            <Link to={'/addcontact'}><MenuItem>Add Contact</MenuItem></Link>
