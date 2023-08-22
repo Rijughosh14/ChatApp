@@ -1,3 +1,19 @@
+# ChatApp
+ChatApp is lightweight chat application designed for individual to chat with other individual and group of people can chat together by creating a group in it. It also provides the feature of video call and voice call to another individual. This repository contain the client side code of this application.
+
+# Tech side
+1.HTML
+2.Javascript
+3.React js
+
+# Libraries
+1.Tailwind css
+2.Socket.js
+3.Simple Peer.js
+4.Axios
+
+and many more
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
