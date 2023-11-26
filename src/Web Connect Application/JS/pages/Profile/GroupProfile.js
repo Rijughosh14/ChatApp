@@ -17,7 +17,7 @@ const GroupProfile = () => {
     useEffect(()=>{
         setName(Chatstate.user)
         getdata(Chatstate.id)
-        setProfile(Chatstate.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+Chatstate.profile_pic:camera)
+        setProfile(Chatstate.profile_pic!==' '?Chatstate.profile_pic:camera)
     },[Chatstate])
 
     const getdata=async(id)=>{

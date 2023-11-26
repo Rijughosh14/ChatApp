@@ -25,9 +25,9 @@ function NormalChatBody({ message }) {
       <div className='flex flex-col w-full h-full overflow-auto antialiased bg-gradient-to-b from-blue-100 to-white '>
         <div>
         {message.length!==0&&
-          message[0].map((data) => {
+          message.map((data,i) => {
             return (
-              <Messagebox msg={data.chat} id={data.sender_id} key={data.id} img={data.image} />
+              <Messagebox msg={data.chat} id={data.sender_id} key={i} img={data.image} />
             )
           })
         }

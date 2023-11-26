@@ -73,7 +73,7 @@ const AddContact = () => {
                 {data && <Card className="mt-6 w-96">
                   <CardHeader color="blue-gray" className="relative h-56">
                     <img
-                      src={(data[0].profile_pic!==null)?process.env.REACT_APP_IMAGE_URL+data[0].profile_pic:camera}
+                      src={(data[0].profile_pic!==null)?data[0].profile_pic:camera}
                       alt="card"
                       className='object-cover h-full w-full'
                     />

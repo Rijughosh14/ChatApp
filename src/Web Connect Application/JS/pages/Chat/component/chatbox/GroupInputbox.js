@@ -15,7 +15,7 @@ function GroupChatBox({ id, setGroupmessage }) {
     e.preventDefault()
     const response = await image_upload(e.target.files[0])
      await handle_GroupMessage(getUserSession().user, id, null, response)
-    setGroupmessage(null, getUserSession().user,state.user, i, response)
+    setGroupmessage(null, getUserSession().user,state.user, i, response,id)
     socket.emit("refresh_chat")
     socket.emit("send_Groupmessage", {RoomId:id,chat:null,
       sender_id:getUserSession().user,
@@ -33,7 +33,7 @@ function GroupChatBox({ id, setGroupmessage }) {
       }
       else {
         await  handle_GroupMessage(getUserSession().user, id, msg, null)
-        setGroupmessage(msg, getUserSession().user,state.user, i, null)
+        setGroupmessage(msg, getUserSession().user,state.user, i, null,id)
         Setmsg('')
         socket.emit("refresh_chat")
         i=i-1

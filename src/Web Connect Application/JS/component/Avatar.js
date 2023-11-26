@@ -12,7 +12,7 @@ export default function Variants({link}) {
 
   return (
      <div className="flex">
-      {Link!==null&&<Avatar src={(Link!==' '&&Link!=='')?process.env.REACT_APP_IMAGE_URL+Link:camera} size="sm" alt="avatar" variant="circular" /> }
+      {Link!==null&&<Avatar src={(Link!==' '&&Link!=='')?Link:camera} size="sm" alt="avatar" variant="circular" /> }
     </div>
   );
 }  

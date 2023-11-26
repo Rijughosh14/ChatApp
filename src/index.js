@@ -97,7 +97,7 @@ setup === "app1" ?
         //</React.StrictMode>
       }
     </BrowserRouter>
-  ) :
+  ) : 
   root.render(
       <ScreenSize />
   )

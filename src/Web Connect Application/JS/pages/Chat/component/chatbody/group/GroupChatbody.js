@@ -25,12 +25,12 @@ function GroupChatBody({message}) {
     <div className='flex flex-col w-full h-full overflow-auto antialiased bg-gradient-to-b from-blue-100 to-white' >
     <div >
       {message.length!==0&&
-        message.map((data)=>{
+        message.map((data,i)=>{
           m=data.name
         if(n===data.name) m='';
         n=data.name
       return(
-            <GroupMessagebox msg={data.message} id={data.sender_id} key={data.id} name={m} img={data.image}/>
+            <GroupMessagebox msg={data.message} id={data.sender_id} key={i} name={m} img={data.image}/>
            )
         })
       }

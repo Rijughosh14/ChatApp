@@ -12,7 +12,7 @@ function NormalChatBox({ id, setmessage }) {
     e.preventDefault()
     const response = await image_upload(e.target.files[0])
     await handle_message(getUserSession().user, id, null, response)
-    setmessage(null, getUserSession().user, i, response)
+    setmessage(null, getUserSession().user, i, response,id)
     socket.emit("refresh_chat")
     socket.emit("send_message", {
       recipient_id: id, chat: null,
@@ -31,7 +31,7 @@ function NormalChatBox({ id, setmessage }) {
       }
       else {
         await handle_message(getUserSession().user, id, msg, null)
-        setmessage(msg, getUserSession().user, i, null)
+        setmessage(msg, getUserSession().user, i, null,id)
         Setmsg('')
         socket.emit("refresh_chat")
         socket.emit("send_message", {
@@ -67,22 +67,6 @@ function NormalChatBox({ id, setmessage }) {
   }
 
   return (
-    // <>
-    //   <div className='flex flex-row bg-green-300 justify-between h-16 items-centre w-full rounded-lg p-2 gap-1'>
-    //     <div className='m-auto'>
-    //       <label htmlFor='formid' className='cursor-pointer'>
-    //         <input type='file' id='formid' hidden accept='image/*' onChange={(e) => handleimg(e)} />
-    //         <FiPaperclip size={'30px'} />
-    //       </label>
-    //     </div>
-    //     <div className=' bg-white my-1 mx-2 w-full rounded-lg'>
-    //       <input type="text" placeholder='enter your text' className='w-full h-full rounded-lg p-2 outline-none' value={msg} onChange={(e) => Setmsg(e.target.value)} onKeyDown={(event) => handleKeyDown(event)} />
-    //     </div>
-    //     <div className='my-1'>
-    //       <Button onClick={(e) => handleMsg(e)}>SEND</Button>
-    //     </div>
-    //   </div>
-    // </>
     <>
       <div
         className="flex flex-row items-center h-20 rounded-xl bg-blue-100 w-full px-4">

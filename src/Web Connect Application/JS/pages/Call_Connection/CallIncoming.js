@@ -105,6 +105,7 @@ const CallIncoming = () => {
                             dispatchCall({ type: 'UPDATE_STATUS', payload: { Status: 'offline' } })
                         });
                         socket.on('close', () => {
+                            console.log("first")
                             //stopping media and destroy peer
                             disconnection(mediastream, peerRef)
                             socket.off()
@@ -169,6 +170,110 @@ const CallIncoming = () => {
                 })
         }
     }, [signal])
+
+
+    
+    useEffect(() => {
+        // const handleBeforeUnload = () => {
+        //     disconnection(mediastream,peerRef)
+        //     //close event
+        //     socket.emit('close', { callee: user,caller:userid })
+        //     //turning off all the socket event
+        //     socket.off()
+        //     //setting call state
+        //     dispatchCall({type:'DISCONNECT'})
+        //     //navigating back to home page
+        //     navigate('/')
+        //   };
+
+        //   window.addEventListener('beforeunload',handleBeforeUnload)
+
+        if (!media) {
+            const storedstream = Callstate.Media
+            const storedFstream = Callstate.FriendMedia
+            const storedpeer = Callstate.Peer
+            if (storedstream) {
+                mediastream = storedstream
+                setMedia(storedstream)
+                peerRef.current = storedpeer
+                if (Callstate.Status === "connected") {
+                    setStatus(true)
+                    friendRef.current.srcObject = storedFstream
+                }
+                else {
+                    friendRef.current.srcObject = storedstream
+                    mediastream = storedstream
+                    setmessage(Callstate.Status)
+                    setStatus(false)
+                }
+            }
+            else {
+                socket.on('signal', data => {
+                    const { signalingData, name } = data
+                    setName(name)
+                    if (JSON.parse(signalingData).type === 'offer') {
+                        setsignal(JSON.parse(signalingData))
+                    }
+                });
+                MediaPeer()
+                    .then((stream) => {
+                        setMedia(stream)
+                        mediastream = stream
+                        const peer = Receiverpeer(stream)
+                        peerRef.current = peer;
+                        //setting call details
+                        dispatchCall({ type: 'SET_CALL', payload: { Media: stream, Peer: peer, callee: userid, caller: user, Status: 'incoming...', Signal: signal, callerName: Name } })
+
+                        peer.on('signal', data => {
+                            // send the signal data to the other peer
+                            socket.emit('signal', { signalingData: JSON.stringify(data), callee: user, caller: userid });
+                        });
+                        peer.on('stream', stream => {
+                            dispatchCall({ type: 'UPDATE_STATUS', payload: { Status: 'connected' } })
+                            dispatchCall({ type: 'UPDATE_FMEDIA', payload: { FriendMedia: stream } })
+                            // display the remote stream in the video element
+                            friendRef.current.srcObject = stream
+                            friendRef.current.play()
+                        });
+                        peer.on('data', data => {
+                            const message = JSON.parse(data);
+                            if (message.type === 'toggleMic') {
+                                // turn off remote mic
+                                if (message.value) {
+                                    toggleaudio(media)
+                                } else {
+                                    toggleaudio(media)
+                                }
+                            }
+                        });
+                        socket.on('offline', () => {
+                            setmessage("offline")
+                            dispatchCall({ type: 'UPDATE_STATUS', payload: { Status: 'offline' } })
+                        });
+                        socket.on('close', () => {
+                            console.log("first")
+                            //stopping media and destroy peer
+                            disconnection(mediastream, peerRef)
+                            socket.off()
+                            //deleting peer
+                            delete peerRef.current;
+                            //setting call state
+                            dispatchCall({ type: 'DISCONNECT' })
+                            //navigating back to home page
+                            navigate('/')
+                          })
+                    })
+                    .catch(error => {
+                        console.error('Error  ', error);
+                        toast.error(error.message)
+                        disconnect()
+                    });
+            }
+        }
+        // return()=>{
+        //     window.removeEventListener('beforeunload',handleBeforeUnload)
+        // }
+    }, [media, Callstate, dispatchCall, Chatstate, userid, navigate, status, user, Name, signal,disconnect]);
 
     return (
         <div className='flex relative  h-screen w-full bg-blue-100'>

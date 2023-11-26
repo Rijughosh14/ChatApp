@@ -23,8 +23,36 @@ const Call=()=> {
   const navigate=useNavigate()
   const {Chatstate,Callstate,dispatchCall,state}=useContext(UserContext)
 
-  
 
+
+  //enabling my video
+  const enable=()=>{
+    setStatus(true)
+  }
+ 
+  //mic enable function
+  const micEnable=useCallback(()=>{
+    toggleaudio(media)   
+    const message = { type: 'toggleMic', value:mic };
+    peerRef.current.send(JSON.stringify(message));
+    setMic(!mic)
+  },[mic,media])
+
+  //disconnect call
+  const disconnect=useCallback(()=>{  
+    disconnection(mediastream,peerRef)
+//close event
+socket.emit('close',{callee:Chatstate.id,caller:userid})
+//turning off all the socket event
+socket.off()
+//setting call state
+dispatchCall({type:'DISCONNECT'})
+//navigating back to home page
+navigate('/')
+  },[Chatstate,navigate,dispatchCall,userid])
+
+
+  
   useEffect(() => {
     if(!media){
       const storedstream=Callstate.Media
@@ -100,36 +128,12 @@ const Call=()=> {
       .catch(error => {
         console.error('Error  ', error);
         toast.error(error.message)
-        disconnection(mediastream,peerRef)
-        navigate('/')
+        disconnect()
+        // disconnection(mediastream,peerRef)
+        // socket.emit('close',{callee:Chatstate.id,caller:userid})
+        // navigate('/')
       });}}
-  },[media,Callstate,dispatchCall,Chatstate,userid,status,navigate,state]);
-
-  //enabling my video
-  const enable=()=>{
-    setStatus(true)
-  }
- 
-  //mic enable function
-  const micEnable=useCallback(()=>{
-    toggleaudio(media)   
-    const message = { type: 'toggleMic', value:mic };
-    peerRef.current.send(JSON.stringify(message));
-    setMic(!mic)
-  },[mic,media])
-
-  //disconnect call
-  const disconnect=useCallback(()=>{  
-    disconnection(mediastream,peerRef)
-//close event
-socket.emit('close',{callee:Chatstate.id,caller:userid})
-//turning off all the socket event
-socket.off()
-//setting call state
-dispatchCall({type:'DISCONNECT'})
-//navigating back to home page
-navigate('/')
-  },[Chatstate,navigate,dispatchCall,userid])
+  },[media,Callstate,dispatchCall,Chatstate,userid,status,navigate,state,disconnect]);
 
   return (
     <div className='flex relative  h-screen w-full bg-blue-100'>

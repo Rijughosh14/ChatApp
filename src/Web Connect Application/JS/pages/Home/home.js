@@ -5,7 +5,7 @@ import Chatcomponent from "./component/chatcomponent";
 import Navbar from "../../component/navbar";
 import SearchBar from "../../component/searchbar";
 import {  useEffect, useState } from "react";
-import { chat_component, getUserSession, get_GroupMessage, get_message } from "../../services/userService";
+import { chat_component, getUserSession,get_lastGroupMessage,get_last_message } from "../../services/userService";
 import { socket } from "../../Socket/Socket";
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
 
   useEffect(() => {
     const promises = data.map(async (data) => {
-      const notifi = data.id !== 0 ? await get_message(getUserSession().user, data.f_id) : await get_GroupMessage(data.f_id);
+      const notifi = data.id !== 0 ? await get_last_message(getUserSession().user, data.f_id) : await get_lastGroupMessage(data.f_id);
       return {
         id: data.f_id,
         image: notifi[notifi.length - 1] ? notifi[notifi.length - 1].image : "",

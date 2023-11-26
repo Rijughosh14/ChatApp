@@ -6,6 +6,7 @@ const initialState={
     GroupChat:{}
 }
 
+
 export const chatSlice=createSlice({
     name:'chats',
     initialState,
@@ -17,7 +18,7 @@ export const chatSlice=createSlice({
             return {
                 ...state,Chat:{
                     ...state.Chat,
-                    [action.payload.id]:[action.payload.result]
+                    [action.payload.id]:action.payload.result
                 }
             }
 
@@ -28,9 +29,9 @@ export const chatSlice=createSlice({
         GroupChats:(state,action)=>
         {
             return {
-                ...state,Chat:{
-                    ...state.Chat,
-                    [action.payload.id]:[action.payload.result]
+                ...state,GroupChat:{
+                    ...state.GroupChat,
+                    [action.payload.id]:action.payload.result
                 }
             }
 
@@ -41,16 +42,17 @@ export const chatSlice=createSlice({
         addChat:(state,action)=>{
             const newchat=
             {
-                    chat: '',
-                    sender_id: '',
-                    id: '',
-                    image: ''                     
+                    chat:action.payload.msg,
+                    sender_id:action.payload.id,
+                    id:action.payload.n,
+                    image: action.payload.response                     
             }
             return {...state,Chat:
                 {
                     ...state.Chat,
-                    [action.payload.id]:[
-                        ...(state.Chat[action.payload.id]||[]),
+                    [action.payload.c_id]:
+                    [
+                        ...(state.Chat[action.payload.c_id]||{}),
                         newchat
                     ]
                 }}
@@ -61,17 +63,17 @@ export const chatSlice=createSlice({
         addGroupChat:(state,action)=>{
             const newchat=
                 {
-                    message:'',
-                    sender_id: '',
-                    name: '',
-                    id: '',
-                    image: ''
+                    message:action.payload.msg,
+                    sender_id:action.payload.id,
+                    name: action.payload.username,
+                    id:action.payload.n,
+                    image: action.payload.response
                 }
                 return {...state,GroupChat:
                     {
                         ...state.GroupChat,
-                        [action.payload.id]:[
-                            ...(state.GroupChat[action.payload.id]||[]),
+                        [action.payload.RoomId]:[
+                            ...(state.GroupChat[action.payload.RoomId]||{}),
                             newchat
                         ]
                     }}

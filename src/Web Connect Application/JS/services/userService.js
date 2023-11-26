@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { _checkUserExist, _login, _signup, _logout, _profile, _update, _addContact, _friends_request, _handleRequest, _friends, _message, _chat, _chatComponent, _newGroup, _GroupMessage, _GroupChat,_checkFriendExist,_GroupList,_Group } from '../data/serverUrls'
+import { _checkUserExist, _login, _signup, _logout, _profile, _update, _addContact, _friends_request, _handleRequest, _friends, _message, _chat, _chatComponent, _newGroup, _GroupMessage, _GroupChat,_checkFriendExist,_GroupList,_Group ,_lastchat,_LastGroupChat} from '../data/serverUrls'
 
 
 
@@ -78,7 +78,7 @@ export const logout = () => {
             const config = {
                 method: _logout.method,
                 url: _logout.route,
-                withCredentials: true,
+                withCredentials: 'include',
             }
             const response = await axios(config)
             Cookies.remove('userId')
@@ -317,6 +317,28 @@ export const get_message = (id, f_id) => {
     })
 }
 
+
+//get last message
+export const get_last_message = (id, f_id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const config = {
+                method: _lastchat.method,
+                url: _lastchat.route,
+                params: {
+                    id,
+                    f_id
+                }
+            }
+            const response = await axios(config)
+            return resolve(response.data)
+
+        } catch (error) {
+            return reject(error.message)
+        }
+    })
+}
+
 //get group message
 export const get_GroupMessage = (id) => {
     return new Promise(async (resolve, reject) => {
@@ -324,6 +346,26 @@ export const get_GroupMessage = (id) => {
             const config = {
                 method: _GroupChat.method,
                 url: _GroupChat.route,
+                params: {
+                    id
+                }
+            }
+            const response = await axios(config)
+            return resolve(response.data)
+
+        } catch (error) {
+            return reject(error.message)
+        }
+    })
+}
+
+//get group last message
+export const get_lastGroupMessage = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const config = {
+                method: _LastGroupChat.method,
+                url: _LastGroupChat.route,
                 params: {
                     id
                 }

@@ -19,17 +19,17 @@ const Profile = () => {
 
   const[Phone_number,setPhonenumber]=useState()
   const[Name,setName]=useState()
-  const[Profile_pic,setProfile_pic]=useState(``)
+  const[Profile_pic,setProfile_pic]=useState(' ')
   const[pic,setpic]=useState(false)
-  const [Profile, setProfile] = useState('')
+  const [Profile, setProfile] = useState(' ')
   const{state,dispatch}=useContext(UserContext)
   const ref=useRef()
 
   useEffect(()=>{
       setPhonenumber(state.number)
       setName(state.user)
-      setProfile(state.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
-      setProfile_pic(state.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+state.profile_pic:camera)
+      setProfile(state.profile_pic!==' '?state.profile_pic:camera)
+      setProfile_pic(state.profile_pic!==' '?state.profile_pic:camera)
       ref.current.focus()
   },[state])
   

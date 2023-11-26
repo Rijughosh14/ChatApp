@@ -35,9 +35,18 @@ export const _chat={
     method:'get',
     route:'/chat'
 }
+
+export const _lastchat={
+    method:'get',
+    route:'/lastchat'
+}
 export const _GroupChat={
     method:'get',
     route:'/groupchat'
+}
+export const _LastGroupChat={
+    method:'get', 
+    route:'/lastgroupchat'
 }
 
 export const _friendsAvatar={

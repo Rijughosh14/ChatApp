@@ -1,7 +1,17 @@
 const initialState = {
     loggedIn: false,
+<<<<<<< HEAD
+    user: '',
+    number: '',
+=======
+<<<<<<< HEAD:src/Web Connect Application/JS/reducers/AuthReducers.js
     user: ' ',
     number: ' ',
+=======
+    user: '',
+    number: '',
+>>>>>>> 7bf7633bfe96ce12f9aa88f9ccb8f194e94952a9:src/ChatApp/JS/reducers/AuthReducers.js
+>>>>>>> 06988192b1a171af0fdc797f60253687ded5b0bc
     profile_pic: ' ',
 }
 

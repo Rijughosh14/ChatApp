@@ -33,7 +33,7 @@ function GroupMessagebox({ msg, id, name,img }) {
       <>
         <div className={`mt-${p} flex flex-row-reverse max-w-screen-lg`}>
           <Card className=" p-3  text-justify box-content max-h-fit max-w-[50%] min-h-fit text-black" >
-            {img && <img src={process.env.REACT_APP_IMAGE_URL + img} alt="" className="hover:cursor-pointer" onClick={(e)=>assignimg(e)}/>
+            {img && <img src={img} alt="" className="hover:cursor-pointer" onClick={(e)=>assignimg(e)}/>
             }
             {msg && <Typography className="break-words">
               {msg}
@@ -47,7 +47,7 @@ function GroupMessagebox({ msg, id, name,img }) {
             <div className="font-serif font-bold" style={{ color: `rgb(${r},${g},${b})` }}>
               {name}
             </div>
-            {img && <img src={process.env.REACT_APP_IMAGE_URL + img} alt="" className="hover:cursor-pointer" onClick={(e)=>assignimg(e)}/>
+            {img && <img src={img} alt="" className="hover:cursor-pointer" onClick={(e)=>assignimg(e)}/>
             }
             {msg && <Typography className="break-words">
               {msg}

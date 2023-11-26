@@ -18,7 +18,6 @@ function Chat() {
   const [chat, setchat] = useState(true)
   const [data, setdata] = useState([])
   const [Groupdata, setGroupdata] = useState([])
-
   
    //dispatch action
    const dispatch=useDispatch()
@@ -33,10 +32,12 @@ function Chat() {
       return null;
       
     }
-    // Return a default value or handle the case when Chatstate.id is blank
+    // Return a default value when Chatstate.id is blank
     return null;
   });  
 
+  
+  
   const Groupchatdata = useSelector((state) => {
     if (Chatstate&&Chatstate.id) {
       const data= state?.chats?.GroupChat?.[Chatstate.id];
@@ -45,39 +46,15 @@ function Chat() {
       }
       return null;
     }
-    // Return a default value or handle the case when Chatstate.id is blank
-    return null; // You can replace null with any suitable default value
+    // Return a default value when Chatstate.id is blank
+    return null; 
   });
-
- 
-
   
 
-  useEffect(() => {
-    socket.on('received_message', (data) => {
-      if(data.sender_id===Chatstate.id){
-      setmessage(data.chat, data.sender_id, data.id, data.image)
-      }
-    })
-    return () => {
-      socket.off('received_message') 
-       }
-  },[Chatstate])
-
-  useEffect(()=>{
-    socket.on('received_Groupmessage',(data)=>{
-      if(data.RoomId===Chatstate.id){
-      setGroupmessage(data.chat,data.sender_id,data.name,data.id,data.image)
-      }
-    })
-    return()=>{
-      socket.off('received_Groupmessage')
-    }
-  },[Chatstate])
 
   //get normal messages
   const getmessages = useCallback(async (id) => {
-    if(chatdata){
+    if(chatdata){ 
       setdata(chatdata)
       return
     }
@@ -88,11 +65,10 @@ function Chat() {
     } catch (error) {
       console.log(error)
     }
-  },[dispatch])
+  },[dispatch,chatdata])
 
   // get group messages
   const getgroupmessages = useCallback(async (id) => {
-    console.log("first")
     if(Groupchatdata){
       setGroupdata(Groupchatdata)
       return
@@ -104,31 +80,52 @@ function Chat() {
     } catch (error) {
       console.log(error)
     }
-  },[dispatch])
+  },[dispatch,Groupchatdata])
 
   //function to set new normal message
-  const setmessage = (msg, id, n, response) => {
-    setdata((data) => [...data,
-    {
-      chat: msg,
-      sender_id: id,
-      id: n,
-      image: response
-    }])
-  }
+  const setmessage = useCallback((msg, id, n, response,c_id) => {
+    // setdata((data) => [...data,
+    // {
+    //   chat: msg,
+    //   sender_id: id,
+    //   id: n,
+    //   image: response
+    // }])
+    dispatch(addChat({msg, id, n, response,c_id}))
+  },[dispatch])
 
   // function to set new group messages
 
-  const setGroupmessage = (msg, id,username, n, response) => {
-    setGroupdata((data) => [...data,
-    {
-      message: msg,
-      sender_id: id,
-      name: username,
-      id: n,
-      image: response
-    }])
-  }
+  const setGroupmessage = useCallback((msg, id,username, n, response,RoomId) => {
+    // setGroupdata((data) => [...data,
+    // {
+    //   message: msg,
+    //   sender_id: id,
+    //   name: username,
+    //   id: n,
+    //   image: response
+    // }])
+    dispatch(addGroupChat({msg, id,username, n, response,RoomId}))
+  },[dispatch])
+
+  useEffect(() => {
+    socket.on('received_message', (data) => {
+      setmessage(data.chat, data.sender_id, data.id, data.image,data.sender_id)
+    })
+    return () => {
+      socket.off('received_message') 
+       }
+  },[Chatstate,setmessage])
+
+  useEffect(()=>{
+    socket.on('received_Groupmessage',(data)=>{
+      setGroupmessage(data.chat,data.sender_id,data.name,data.id,data.image,data.RoomId)
+    })
+    return()=>{
+      socket.off('received_Groupmessage')
+    }
+  },[Chatstate,setGroupmessage])
+
 
   useEffect(() => {
     setchat(Chatstate&&Chatstate.loggedIn)

@@ -31,15 +31,15 @@ export default function Login({callback}) {
   const sendOtp = async (recaptcha) => {
     try {
       setLoading(true)
-    //   let confirmationResult =await toast.promise(
-    //     firebase.auth().signInWithPhoneNumber(phone,recaptcha),
-    //     {
-    //       pending: 'Sending Otp',
-    //       success: 'Otp Sent 👌',
-    //       error: 'Otp Cancelled 🤯'
-    //     }
-    // );
-    //   setResult(confirmationResult)
+      let confirmationResult =await toast.promise(
+        firebase.auth().signInWithPhoneNumber(phone,recaptcha),
+        {
+          pending: 'Sending Otp',
+          success: 'Otp Sent 👌',
+          error: 'Otp Cancelled 🤯'
+        }
+    );
+      setResult(confirmationResult)
       setLoading(false)
       setdisplay(true)
 
@@ -50,26 +50,26 @@ export default function Login({callback}) {
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-    // try {
-    //   setLoading(true)
-    //   if (otp === '') {
-    //     toast('enter a otp')
-    //     return;
-    //   }
-    //    await toast.promise(
-    //     result.confirm(otp),
-    //     {
-    //       pending: 'Verifying Otp',
-    //       success: 'Otp verified 👌',
-    //       error: 'Otp is wrong 🤯'
-    //     }
-    //     )
+    try {
+      setLoading(true)
+      if (otp === '') {
+        toast('enter a otp')
+        return;
+      }
+       await toast.promise(
+        result.confirm(otp),
+        {
+          pending: 'Verifying Otp',
+          success: 'Otp verified 👌',
+          error: 'Otp is wrong 🤯'
+        }
+        )
          callback({ token: 1, Phone_number }, undefined)
-    // } catch (err) {
-    //   callback(undefined, 'OTP verification failed!');
-    //   setLoading(false)
-    //   setOtp('')
-    // }
+    } catch (err) {
+      callback(undefined, 'OTP verification failed!');
+      setLoading(false)
+      setOtp('')
+    }
   };
 
   

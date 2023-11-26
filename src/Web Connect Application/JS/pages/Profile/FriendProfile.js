@@ -13,7 +13,7 @@ const FriendProfile = () => {
     useEffect(()=>{
         setName(Chatstate.user)
         setNumber(Chatstate.phone_number)
-        setProfile(Chatstate.profile_pic!==' '?process.env.REACT_APP_IMAGE_URL+Chatstate.profile_pic:camera)
+        setProfile(Chatstate.profile_pic!==' '?Chatstate.profile_pic:camera)
     },[Chatstate])
   return (
     <>
