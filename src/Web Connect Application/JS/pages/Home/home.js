@@ -4,9 +4,13 @@ import {
 import Chatcomponent from "./component/chatcomponent";
 import Navbar from "../../component/navbar";
 import SearchBar from "../../component/searchbar";
-import {  useEffect, useState } from "react";
+import {  useCallback, useEffect, useState } from "react";
 import { chat_component, getUserSession,get_lastGroupMessage,get_last_message } from "../../services/userService";
 import { socket } from "../../Socket/Socket";
+import { useDispatch, useSelector } from 'react-redux';
+import { ChatComponent } from "../../Features/Component/Component";
+
+
 
 export default function Home() {
   let x = 0;
@@ -14,15 +18,15 @@ export default function Home() {
   const [temp, setTemp] = useState([])
   const [Noti, setNoti] = useState([])
 
-  useEffect(() => {
-    getdata()
-    socket.on("received_refresh_chat", () => {
-      getdata()
-    })
-    const result=getUserSession().user
-     socket.emit('user_connection',result)
-    return ()=>socket.off('received_refresh_chat')
-  }, [])
+  const dispatch=useDispatch()
+
+  const component=useSelector((state)=>{
+    const data=state?.components?.Component
+    if(data.length>0)return data;
+    return null;
+  })
+
+  
 
 
   //listening normal message event
@@ -74,13 +78,35 @@ export default function Home() {
     setdata(newlist)
   }
 
+  
   //get home chat component data
-  const getdata = async () => {
-    const result = await chat_component(getUserSession().user)
-    setdata(result)
-    setTemp(result)
+  const getdata = useCallback(async () => {
+    try {     
+      const result = await chat_component(getUserSession().user)
+      dispatch(ChatComponent({result}))
+      setdata(result)
+      setTemp(result)
+    } catch (error) {
+      console.log(error)
+    }
+  },[dispatch])
 
-  }
+
+  useEffect(() => {
+    if(component){
+      setdata(component)
+      setTemp(component)
+    }
+    else{
+      getdata()
+    }
+    socket.on("received_refresh_chat", () => {
+      getdata()
+    })
+    const result=getUserSession().user
+     socket.emit('user_connection',result)
+    return ()=>socket.off('received_refresh_chat')
+  }, [getdata,component])
 
   useEffect(() => {
     const promises = data.map(async (data) => {
