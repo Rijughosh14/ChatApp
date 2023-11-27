@@ -31,15 +31,15 @@ export default function Login({callback}) {
   const sendOtp = async (recaptcha) => {
     try {
       setLoading(true)
-    //   let confirmationResult =await toast.promise(
-    //     firebase.auth().signInWithPhoneNumber(phone,recaptcha),
-    //     {
-    //       pending: 'Sending Otp',
-    //       success: 'Otp Sent 👌',
-    //       error: 'Otp Cancelled 🤯'
-    //     }
-    // );
-    //   setResult(confirmationResult)
+      let confirmationResult =await toast.promise(
+        firebase.auth().signInWithPhoneNumber(phone,recaptcha),
+        {
+          pending: 'Sending Otp',
+          success: 'Otp Sent 👌',
+          error: 'Otp Cancelled 🤯'
+        }
+    );
+      setResult(confirmationResult)
       setLoading(false)
       setdisplay(true)
 
@@ -52,18 +52,18 @@ export default function Login({callback}) {
     e.preventDefault();
     try {
       setLoading(true)
-      // if (otp === '') {
-      //   toast('enter a otp')
-      //   return;
-      // }
-      //  await toast.promise(
-      //   result.confirm(otp),
-      //   {
-      //     pending: 'Verifying Otp',
-      //     success: 'Otp verified 👌',
-      //     error: 'Otp is wrong 🤯'
-      //   }
-      //   )
+      if (otp === '') {
+        toast('enter a otp')
+        return;
+      }
+       await toast.promise(
+        result.confirm(otp),
+        {
+          pending: 'Verifying Otp',
+          success: 'Otp verified 👌',
+          error: 'Otp is wrong 🤯'
+        }
+        )
          callback({ token: 1, Phone_number }, undefined)
     } catch (err) {
       callback(undefined, 'OTP verification failed!');
@@ -75,17 +75,17 @@ export default function Login({callback}) {
   
   const submitData=(e)=>{
       e.preventDefault()
-      // if(Phone_number.length===0||Phone_number.length<10){
-      //   toast('enter a valid number')
-      //   return
-      // }
-      // try {
-      //   setLoading(true)
+      if(Phone_number.length===0||Phone_number.length<10){
+        toast('enter a valid number')
+        return
+      }
+      try {
+        setLoading(true)
         sendOtp(recaptcha);
-      // } catch (error) {
-      //   setLoading(true)
-      //   console.log(error)
-      // }
+      } catch (error) {
+        setLoading(true)
+        console.log(error)
+      }
   }
 
   return (
