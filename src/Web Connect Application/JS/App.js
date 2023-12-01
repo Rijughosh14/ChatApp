@@ -39,6 +39,11 @@ function App2() {
       SetData(result)
   },[])
 
+
+  useEffect(()=>{
+    data.status&& socket.emit('user_connection',data.user)
+  },[data])
+
   useEffect(() => {
     data.status && userProfile(data.user).then((data) => dispatch({ type: 'SET_USER', payload: { user: data.name, number: data.phone_number, profile_pic: data.profile_pic, loggedIn: true } }))
     data.status && getdata()
