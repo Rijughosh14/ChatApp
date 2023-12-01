@@ -8,7 +8,7 @@ import {  useCallback, useEffect, useState } from "react";
 import { chat_component, getUserSession,get_lastGroupMessage,get_last_message } from "../../services/userService";
 import { socket } from "../../Socket/Socket";
 import { useDispatch, useSelector } from 'react-redux';
-import { ChatComponent } from "../../Features/Component/Component";
+import { ChatComponent,ChatNotification } from "../../Features/Component/Component";
 
 
 
@@ -17,6 +17,7 @@ export default function Home() {
   const [data, setdata] = useState([])
   const [temp, setTemp] = useState([])
   const [Noti, setNoti] = useState([])
+  const [Check, setCheck] = useState(false)
 
   const dispatch=useDispatch()
 
@@ -26,7 +27,11 @@ export default function Home() {
     return null;
   })
 
-  
+  const notification=useSelector((state)=>{
+    const data=state?.components?.Notification
+    if(data.length>0)return data;
+    return null;
+  })
 
 
   //listening normal message event
@@ -89,6 +94,7 @@ export default function Home() {
     } catch (error) {
       console.log(error)
     }
+    setCheck(true)
   },[dispatch])
 
 
@@ -103,26 +109,35 @@ export default function Home() {
     socket.on("received_refresh_chat", () => {
       getdata()
     })
-    const result=getUserSession().user
-     socket.emit('user_connection',result)
     return ()=>socket.off('received_refresh_chat')
   }, [getdata,component])
 
+
+
   useEffect(() => {
-    const promises = data.map(async (data) => {
-      const notifi = data.id !== 0 ? await get_last_message(getUserSession().user, data.f_id) : await get_lastGroupMessage(data.f_id);
-      return {
-        id: data.f_id,
-        image: notifi[notifi.length - 1] ? notifi[notifi.length - 1].image : "",
-        message: notifi[notifi.length - 1] ? notifi[notifi.length - 1].message || notifi[notifi.length - 1].chat : "",
-        name: notifi[notifi.length - 1] ? notifi[notifi.length - 1].name : "",
-        sender_id: notifi[notifi.length - 1] ? notifi[notifi.length - 1].sender_id : ''
-      };
-    });
-    Promise.all(promises).then((values) => {
-      setNoti(values);
-    });
-  }, [data]);
+
+    if(notification){
+      setNoti(notification)     
+    }
+    if(Check){
+      const promises = data.map(async (data) => {
+          const notifi = data.id !== 0 ? await get_last_message(getUserSession().user, data.f_id) : await get_lastGroupMessage(data.f_id);
+          return {
+            id: data.f_id,
+            image: notifi[notifi.length - 1] ? notifi[notifi.length - 1].image : "",
+            message: notifi[notifi.length - 1] ? notifi[notifi.length - 1].message || notifi[notifi.length - 1].chat : "",
+            name: notifi[notifi.length - 1] ? notifi[notifi.length - 1].name : "",
+            sender_id: notifi[notifi.length - 1] ? notifi[notifi.length - 1].sender_id : ''
+          };
+        });
+        Promise.all(promises).then((values) => {
+          setNoti(values);
+          dispatch(ChatNotification({values}))
+        });
+        setCheck(false)
+      }
+  }, [data,notification,dispatch,Check]);
+
 
   return (
     <Card className="h-screen w-96 antialiased bg-gradient-to-b from-blue-50 to-white shadow-2xl">
