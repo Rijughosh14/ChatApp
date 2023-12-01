@@ -2,7 +2,8 @@ import { createSlice} from "@reduxjs/toolkit";
 
 
 const initialState={
-    Component:[]
+    Component:[],
+    Notification:[]
 }
 
 export const componentSlice=createSlice({
@@ -10,7 +11,11 @@ export const componentSlice=createSlice({
     initialState,
     reducers:{
         ChatComponent:(state,action)=>{
-            return {Component:action.payload.result}
+            return {...state,Component:action.payload.result}
+        }
+        ,
+        ChatNotification:(state,action)=>{
+            return {...state,Notification:action.payload.values}
         }
     }
 })
@@ -18,4 +23,4 @@ export const componentSlice=createSlice({
 
 export default componentSlice.reducer
 
-export const {ChatComponent} =componentSlice.actions
+export const {ChatComponent,ChatNotification} =componentSlice.actions
