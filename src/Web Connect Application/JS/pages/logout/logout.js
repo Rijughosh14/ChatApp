@@ -5,7 +5,10 @@ import {
     DialogFooter,
   } from "@material-tailwind/react";
 import React, { useContext, useState } from 'react'
+import { useDispatch } from "react-redux";
 import { Link,useNavigate } from "react-router-dom";
+import { ResetChat } from "../../Features/Chat/ChatSlice.js";
+import { ResetComponents } from "../../Features/Component/Component.js";
 import { UserContext } from "../../hooks/context.js";
 import {logout} from '../../services/userService.js'
 import { socket } from "../../Socket/Socket.js";
@@ -14,13 +17,16 @@ function Logout() {
 
     const [open, setOpen] = useState(true);
     const navigate=useNavigate()
-    const{state,dispatchChat}=useContext(UserContext)
+    const{state,dispatch}=useContext(UserContext)
+    const dispatchRedux=useDispatch()
  
   const handleOpen = async(e) => {
     e.preventDefault()
     setOpen(!open)
     await logout()
-    dispatchChat({type:'LOGOUT'});
+    dispatch({type:'LOGOUT'});
+    dispatchRedux(ResetChat())
+    dispatchRedux(ResetComponents())
     socket.emit('logout',state.user)
     navigate('/')
   };
