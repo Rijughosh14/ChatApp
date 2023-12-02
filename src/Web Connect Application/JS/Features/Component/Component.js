@@ -17,10 +17,17 @@ export const componentSlice=createSlice({
         ChatNotification:(state,action)=>{
             return {...state,Notification:action.payload.values}
         }
+        ,
+        ResetComponents:()=>{
+            return{
+                Component:[],
+                Notification:[]
+            }
+        }
     }
 })
 
 
 export default componentSlice.reducer
 
-export const {ChatComponent,ChatNotification} =componentSlice.actions
+export const {ChatComponent,ChatNotification,ResetComponents} =componentSlice.actions
