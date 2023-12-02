@@ -6,14 +6,20 @@ import { getUserSession } from '../../../services/userService'
 
 function Chatcomponent({ id, name, set, profile, number, notification }) {
 
+  console.log(notification)
   const { dispatchChat } = useContext(UserContext)
   const [noti, setnoti] = useState(null)
   const [Name, setname] = useState('')
   const [ProfilePic, setProfilePic] = useState(null)
 
   useEffect(() => {
-    if (notification && notification.sender_id !== getUserSession().user) {
-      setname(notification.name)
+    if(notification&&notification.name){
+      if (notification && notification.sender_id !== getUserSession().user) {
+        setname(notification.name)
+      }
+    }
+    else{
+      setname('')
     }
     if (notification && notification.len) {
       setnoti(notification.len)
