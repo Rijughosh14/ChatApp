@@ -24,10 +24,10 @@ function Logout() {
     e.preventDefault()
     setOpen(!open)
     await logout()
+    socket.emit('logout',state.user)
     dispatch({type:'LOGOUT'});
     dispatchRedux(ResetChat())
     dispatchRedux(ResetComponents())
-    socket.emit('logout',state.user)
     navigate('/')
   };
   return (
