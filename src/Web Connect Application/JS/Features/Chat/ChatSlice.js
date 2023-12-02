@@ -78,10 +78,18 @@ export const chatSlice=createSlice({
                         ]
                     }}
         }
+        ,
+        //reset the state
+        ResetChat:()=>{
+            return{
+                Chat:{},
+                GroupChat:{}
+            }
+        }
     }
 })
 
 
 export default chatSlice.reducer
 
-export const {addChat,addGroupChat,Chats,GroupChats}=chatSlice.actions
+export const {addChat,addGroupChat,Chats,GroupChats,ResetChat}=chatSlice.actions
